@@ -20,10 +20,12 @@ import {
 import { Search2Icon } from "@chakra-ui/icons";
 import { useContext } from "react";
 import { AllContext } from "../Context/AllContextProvider";
+import RangeSlider from "./RangeSlider";
 
 export default function FilterDrower() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  let { state } = useContext(AllContext);
 
   return (
     <>
@@ -48,20 +50,31 @@ export default function FilterDrower() {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>
-            <Heading size="md">Search</Heading>
+            <Heading size="lg">SEARCH</Heading>
           </DrawerHeader>
 
           <DrawerBody>
-            <Input placeholder="Search Products" />
+            <Input placeholder="Search Products" disabled />
             <Divider mt="2" mb="2" />
-            <FilterList />
+            <Heading size="md" mb="1" mt="3">
+              CATEGEORY
+            </Heading>
+            <CategeoryList />
+            <Divider mt="2" mb="2" />
+            <Heading size="md">PRICE RANGE</Heading>
+            <RangeSlider />
+            <Flex justify="space-between">
+              <Text>min : ₹ {state.min}</Text>
+              <Text>to</Text>
+              <Text>max : ₹ {state.max}</Text>
+            </Flex>
+            <Divider mt="2" mb="2" />
           </DrawerBody>
 
           <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
+            <Button colorScheme="red" mr={3} onClick={onClose}>
+              Close
             </Button>
-            <Button colorScheme="blue">Save</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
@@ -69,7 +82,7 @@ export default function FilterDrower() {
   );
 }
 
-export function FilterList() {
+export function CategeoryList() {
   return (
     <Flex justify="space-between">
       {NAV_ITEMS.map((categ) => (
@@ -84,7 +97,6 @@ export function FilterList() {
 
 export let SubCategeory = ({ parent, childrens }) => {
   let { state, setParams } = useContext(AllContext);
-  
 
   return (
     <>
@@ -92,8 +104,14 @@ export let SubCategeory = ({ parent, childrens }) => {
         <Box key={subCat.label}>
           <NavLink
             onClick={() =>
-              setParams({ categeory: parent, subcategeory: subCat.label })
+              setParams({
+                categeory: parent,
+                subcategeory: subCat.label,
+                min: 0,
+                max: 2000,
+              })
             }
+            to="/products"
           >
             {subCat.label}
           </NavLink>
@@ -125,3 +143,13 @@ const NAV_ITEMS = [
     ],
   },
 ];
+
+/*
+{
+  price_greater_than, 
+  price_less_than, 
+  rating_greater_than, 
+  rating_less_than;
+  https://makeup-api.herokuapp.com/api/v1/products.json?product_type=blush&price_less_than=10&price_greater_than=8
+}
+*/

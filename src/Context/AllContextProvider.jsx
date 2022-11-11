@@ -15,14 +15,20 @@ export default function AllContextProvider({ children }) {
     setState({ ...state, auth: false, token: "" });
   };
 
-  let setParams = ({ categeory, subcategeory }) => {
-    setState({ ...state, categeory, subcategeory });
+  let setParams = ({ categeory, subcategeory, min, max }) => {
+    setState({ ...state, categeory, subcategeory, min, max });
   };
 
- 
+  let setPriceRange = ({ min, max }) => {
+    setState({ ...state, min, max });
+  };
+
+  console.log(state);
 
   return (
-    <AllContext.Provider value={{ state, logIn, logOut, setParams }}>
+    <AllContext.Provider
+      value={{ state, logIn, logOut, setParams, setPriceRange }}
+    >
       {children}{" "}
     </AllContext.Provider>
   );

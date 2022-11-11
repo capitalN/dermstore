@@ -7,10 +7,14 @@ import { Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
 import Loading from "../Components/Loading";
 import FilterDrower from "../Components/FilterDrower";
 
-let getData = ({ categeory = "brand", subcategeory = "suncoat" }) => {
+let getData = ({ categeory, subcategeory, min=400, max=500 }) => {
   return axios({
     method: "get",
     baseURL: `https://makeup-api.herokuapp.com/api/v1/products.json?${categeory}=${subcategeory}`,
+    params: {
+      price_greater_than: min/80,
+      price_less_than: max/80,
+    },
   });
 };
 
@@ -29,6 +33,7 @@ export default function Products() {
 
   useEffect(() => {
     fetchData();
+    console.log(data)
   }, [state]);
 
   if (loading) return <Loading />;
@@ -46,7 +51,7 @@ export default function Products() {
             name={el.name}
             brand={el.brand}
             img={el.image_link}
-            price={el.price}
+            price={el.price * 80}
             categeory={el.categeory}
             type={el.product_type}
             rating={el.rating}

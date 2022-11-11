@@ -66,7 +66,7 @@ export default function ProductCard({
               colorScheme="pink"
               size="xs"
             >
-              $ {price}
+              ₹ {Math.floor(price)}
             </Button>
           </Tooltip>
         </Flex>
