@@ -7,13 +7,10 @@ import { Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
 import Loading from "../Components/Loading";
 import FilterDrower from "../Components/FilterDrower";
 
-// { label="brand", subLabel="maybelline" }
-// { label, subLabel}
-
-let getData = ({ label = "brand", subLabel = "maybelline" }) => {
+let getData = ({ categeory = "brand", subcategeory = "suncoat" }) => {
   return axios({
     method: "get",
-    baseURL: `https://makeup-api.herokuapp.com/api/v1/products.json?${label}=${subLabel}`,
+    baseURL: `https://makeup-api.herokuapp.com/api/v1/products.json?${categeory}=${subcategeory}`,
   });
 };
 
@@ -23,6 +20,7 @@ export default function Products() {
   let [loading, setLoading] = useState(true);
 
   let fetchData = async () => {
+    console.log(state);
     await getData(state)
       .then((res) => setData(res.data))
       .catch();

@@ -15,8 +15,11 @@ import {
   Text,
   Heading,
   Box,
+  Flex,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
+import { useContext } from "react";
+import { AllContext } from "../Context/AllContextProvider";
 
 export default function FilterDrower() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -68,23 +71,32 @@ export default function FilterDrower() {
 
 export function FilterList() {
   return (
-    <>
+    <Flex justify="space-between">
       {NAV_ITEMS.map((categ) => (
         <Box key={categ.label}>
-          <Heading size="sm">{categ.label}</Heading>
-          <SubCategeory childrens={categ.children} />
+          <Heading size="sm">{categ.label.toUpperCase()}</Heading>
+          <SubCategeory childrens={categ.children} parent={categ.label} />
         </Box>
       ))}
-    </>
+    </Flex>
   );
 }
 
-export let SubCategeory = ({ childrens }) => {
+export let SubCategeory = ({ parent, childrens }) => {
+  let { state, setParams } = useContext(AllContext);
+  
+
   return (
     <>
       {childrens.map((subCat) => (
-        <Box key={subCat.subLabel}>
-          <NavLink>{subCat.subLabel}</NavLink>
+        <Box key={subCat.label}>
+          <NavLink
+            onClick={() =>
+              setParams({ categeory: parent, subcategeory: subCat.label })
+            }
+          >
+            {subCat.label}
+          </NavLink>
         </Box>
       ))}
     </>
@@ -93,23 +105,23 @@ export let SubCategeory = ({ childrens }) => {
 
 const NAV_ITEMS = [
   {
-    label: "BRAND",
+    label: "brand",
     children: [
-      { label: "brand", subLabel: "maybelline", href: "#" },
-      { label: "brand", subLabel: "annabelle", href: "#" },
-      { label: "brand", subLabel: "colourpop", href: "#" },
-      { label: "brand", subLabel: "revlon", href: "#" },
-      { label: "brand", subLabel: "suncoat", href: "#" },
+      { label: "maybelline", href: "#" },
+      { label: "annabelle", href: "#" },
+      { label: "colourpop", href: "#" },
+      { label: "revlon", href: "#" },
+      { label: "suncoat", href: "#" },
     ],
   },
   {
-    label: "PRODUT TYPE",
+    label: "product_type",
     children: [
-      { label: "product_type", subLabel: "blush", href: "#" },
-      { label: "product_type", subLabel: "bronzer", href: "#" },
-      { label: "product_type", subLabel: "eyebrow", href: "#" },
-      { label: "product_type", subLabel: "eyeliner", href: "#" },
-      { label: "product_type", subLabel: "eyeshadow", href: "#" },
+      { label: "blush", href: "#" },
+      { label: "bronzer", href: "#" },
+      { label: "eyebrow", href: "#" },
+      { label: "eyeliner", href: "#" },
+      { label: "eyeshadow", href: "#" },
     ],
   },
 ];

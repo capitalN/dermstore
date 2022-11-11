@@ -15,8 +15,14 @@ export default function AllContextProvider({ children }) {
     setState({ ...state, auth: false, token: "" });
   };
 
+  let setParams = ({ categeory, subcategeory }) => {
+    setState({ ...state, categeory, subcategeory });
+  };
+
+ 
+
   return (
-    <AllContext.Provider value={{ state, logIn, logOut }}>
+    <AllContext.Provider value={{ state, logIn, logOut, setParams }}>
       {children}{" "}
     </AllContext.Provider>
   );
