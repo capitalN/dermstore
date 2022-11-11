@@ -24,7 +24,6 @@ export default function Products() {
   let [loading, setLoading] = useState(true);
 
   let fetchData = async () => {
-    console.log(state);
     await getData(state)
       .then((res) => setData(res.data))
       .catch();
@@ -33,7 +32,6 @@ export default function Products() {
 
   useEffect(() => {
     fetchData();
-    console.log(data)
   }, [state]);
 
   if (loading) return <Loading />;
@@ -48,6 +46,7 @@ export default function Products() {
         {data.map((el) => (
           <ProductCard
             key={el.id}
+            id={el.id}
             name={el.name}
             brand={el.brand}
             img={el.image_link}

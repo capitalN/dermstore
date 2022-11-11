@@ -1,21 +1,33 @@
 {
-  "users": [
+  "users": [],
+  "cart": [
     {
-      "name": "nikhil",
-      "email": "angolkarnikhil@gmail.com",
-      "password": "123",
-      "token": 0.07377222147749518,
-      "id": 1
+      "userId": 1047,
+      "name": "Blotted Lip",
+      "img": "https://cdn.shopify.com/s/files/1/1338/0845/products/brain-freeze_a_800x1200.jpg?v=1502255076",
+      "price": 440,
+      "type": "lipstick",
+      "qty": 1,
+      "id": 3
+    },
+    {
+      "userId": 1046,
+      "name": "Lippie Stix",
+      "img": "https://cdn.shopify.com/s/files/1/1338/0845/collections/blottedlip-lippie-stix_grande.jpg?v=1512588803",
+      "price": 440,
+      "type": "lipstick",
+      "qty": 1,
+      "id": 4
+    },
+    {
+      "userId": 990,
+      "name": "Boudoir Mascara Collection",
+      "img": "https://www.nyxcosmetics.com/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-cpd-nyxusa-master-catalog/default/dwda9f6cec/ProductImages/Eyes/Boudoir_Mascara_Collection/boudoirmascaracollection_main.jpg.jpg?sw=390&sh=390&sm=fit",
+      "price": 480,
+      "type": "mascara",
+      "qty": 1,
+      "id": 6
     }
-  ],"cart": [
-    
   ],
-  "admin": [
-    {
-      "id": 1,
-      "name": "nikhil",
-      "password": "123",
-      "token": 0.0737722214774
-    }
-  ]
+  "admin": []
 }

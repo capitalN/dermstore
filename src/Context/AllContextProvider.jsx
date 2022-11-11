@@ -23,8 +23,6 @@ export default function AllContextProvider({ children }) {
     setState({ ...state, min, max });
   };
 
-  console.log(state);
-
   return (
     <AllContext.Provider
       value={{ state, logIn, logOut, setParams, setPriceRange }}

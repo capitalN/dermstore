@@ -1,11 +1,12 @@
-import { Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import React from "react";
+import Carousel from "../Components/Carausel";
 import FilterDrower from "../Components/FilterDrower";
 
 export default function Home() {
   return (
-    <>
-      <Heading size="3xl">h</Heading>
-    </>
+    <Box mt={16}>
+      <Carousel/>
+    </Box>
   );
 }
