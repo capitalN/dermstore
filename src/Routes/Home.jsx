@@ -1,9 +1,11 @@
-import React from 'react'
+import { Heading } from "@chakra-ui/react";
+import React from "react";
+import FilterDrower from "../Components/FilterDrower";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  )
+    <>
+      <Heading size="3xl">h</Heading>
+    </>
+  );
 }

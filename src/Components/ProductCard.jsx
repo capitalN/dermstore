@@ -62,7 +62,10 @@ export default function ProductCard({
             </Badge>
           </Flex>
           <Tooltip label="Add to Cart" placement="right">
-            <Button colorScheme="pink" size="xs">
+            <Button
+              colorScheme="pink"
+              size="xs"
+            >
               $ {price}
             </Button>
           </Tooltip>

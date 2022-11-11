@@ -8,7 +8,7 @@ export default function Profile() {
   let { logOut } = useContext(AllContext);
 
   return (
-    <Flex mt="50" flexDirection="column" justify="center" align="center">
+    <Flex m="200" flexDirection="column" justify="center" align="center">
       <Stack
         w="xs"
         padding="5"

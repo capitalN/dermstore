@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { AllContext } from "../Context/AllContextProvider";
 import ProductCard from "../Components/ProductCard";
-import { Grid } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
 import Loading from "../Components/Loading";
+import FilterDrower from "../Components/FilterDrower";
 
 // { label="brand", subLabel="maybelline" }
 // { label, subLabel}
@@ -35,9 +36,13 @@ export default function Products() {
   if (loading) return <Loading />;
 
   return (
-    <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-      {data.map((el) => (
-        <>
+    <>
+      <Heading size="3xl">Products</Heading>
+      <Flex position="fixed" zIndex="15" right="10" bottom="10">
+        <FilterDrower />
+      </Flex>
+      <Grid templateColumns="repeat(5, 1fr)" gap={4} p="10">
+        {data.map((el) => (
           <ProductCard
             key={el.id}
             name={el.name}
@@ -48,8 +53,8 @@ export default function Products() {
             type={el.product_type}
             rating={el.rating}
           />
-        </>
-      ))}
-    </Grid>
+        ))}
+      </Grid>
+    </>
   );
 }

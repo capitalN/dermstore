@@ -47,8 +47,21 @@ export default function Navbar() {
 
   return (
     <>
-      <Box px={4}>
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+      <Box>
+        <Flex
+          as="header"
+          position="fixed"
+          w="100%"
+          bg="white"
+          h={16}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          zIndex="10"
+          pl="5"
+          pr="5"
+          top="0"
+          boxShadow="xl"
+        >
           <IconButton
             size={"md"}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -85,7 +98,16 @@ export default function Navbar() {
         </Flex>
 
         {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
+          <Box
+            display={{ md: "none" }}
+            bg="white"
+            position="fixed"
+            top="16"
+            width="100%"
+            zIndex="15"
+            pb="5"
+            boxShadow="xl"
+          >
             <Stack as={"nav"} spacing={4}>
               {inputLinks.map((link) => (
                 <NavLink key={link.title} to={link.to} onClick={onClose}>
@@ -96,7 +118,6 @@ export default function Navbar() {
           </Box>
         ) : null}
       </Box>
-      <Divider/>
     </>
   );
 }
