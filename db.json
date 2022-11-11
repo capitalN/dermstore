@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "name": "nikhil",
+      "email": "angolkarnikhil@gmail.com",
+      "password": "123",
+      "token": 0.07377222147749518,
+      "id": 1
+    }
+  ],"cart": [
+    
+  ],
+  "admin": [
+    {
+      "id": 1,
+      "name": "nikhil",
+      "password": "123",
+      "token": 0.0737722214774
+    }
+  ]
+}
