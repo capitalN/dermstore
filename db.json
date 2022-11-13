@@ -1,7 +1,16 @@
 {
-  "users": [],
   "cart": [
-    
-  ],
-  "admin": []
+    {
+      "id": 3
+    },
+    {
+      "userId": 1046,
+      "name": "Lippie Stix",
+      "image_link": "https://cdn.shopify.com/s/files/1/1338/0845/collections/blottedlip-lippie-stix_grande.jpg?v=1512588803",
+      "price": 440,
+      "type": "lipstick",
+      "qty": 1,
+      "id": 4
+    }
+  ]
 }

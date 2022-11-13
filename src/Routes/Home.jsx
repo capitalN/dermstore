@@ -19,7 +19,7 @@ export default function Home() {
     <Box mt={16}>
       <Carousel />
       <Box p="10">
-        <TopBrands/>
+        <TopBrands />
       </Box>
     </Box>
   );

@@ -22,15 +22,23 @@ http://localhost:3004/cart
 json-server --watch db.json --port 3004
 */
 
-let PushToCart = async (addCart) => {
-  await axios({
+let PushToCart = (addCart) => {
+  axios({
     method: "post",
     url: "http://localhost:3004/cart",
     data: addCart,
   });
 };
 
-export default function ProductCard({ name, id, img, price, type, rating,qty=1 }) {
+export default function ProductCard({
+  name,
+  id,
+  img,
+  price,
+  type,
+  rating,
+  qty = 1,
+}) {
   let [loading, setLoading] = useState(false);
   let [addCart, setAddCart] = useState({});
   let { state } = useContext(AllContext);
@@ -40,12 +48,12 @@ export default function ProductCard({ name, id, img, price, type, rating,qty=1 }
       ...prev,
       userId: id,
       name,
-      img,
+      image_link:img,
       price,
       type,
       qty,
     }));
-    PushToCart(addCart);
+    PushToCart(addCart)
   };
 
   useEffect(() => {
@@ -61,6 +69,7 @@ export default function ProductCard({ name, id, img, price, type, rating,qty=1 }
           h="330"
           direction="column"
           boxShadow="xl"
+          bg="white"
           p="2"
           justify="space-between"
         >
@@ -84,7 +93,7 @@ export default function ProductCard({ name, id, img, price, type, rating,qty=1 }
               ★ {rating || 3.5}
             </Badge>
           </Flex>
-          <Tooltip label="Add to Cart" placement="right">
+          <Tooltip label="Add to Cart" placement="top">
             <Button colorScheme="pink" size="sm" onClick={handleAddCart}>
               ₹ {Math.floor(price)}
             </Button>
@@ -94,5 +103,3 @@ export default function ProductCard({ name, id, img, price, type, rating,qty=1 }
     </>
   );
 }
-
-

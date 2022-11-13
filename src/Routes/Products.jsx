@@ -27,15 +27,15 @@ export default function Products() {
     await getData(state)
       .then((res) => setData(res.data))
       .catch();
-    setLoading(false);
+    // setLoading(false);
   };
 
   useEffect(() => {
     fetchData();
-    console.log(data);
+    // console.log(data);
   }, [state]);
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <Container as={Stack} maxW={"6xl"} mt="20">

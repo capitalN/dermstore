@@ -16,6 +16,7 @@ import {
   Heading,
   Box,
   Flex,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import { useContext } from "react";
@@ -29,17 +30,18 @@ export default function FilterDrower() {
 
   return (
     <>
-      <Button
-        ref={btnRef}
-        colorScheme="yellow"
-        onClick={onOpen}
-        borderRadius="full"
-        border="10px solid teal"
-        w="16"
-        h="16"
-      >
-        <Search2Icon w="5" h="5" />
-      </Button>
+      <Tooltip label="filter" placement="right">
+        <Button
+          ref={btnRef}
+          colorScheme="yellow"
+          onClick={onOpen}
+          borderRadius="full"
+          w="16"
+          h="16"
+        >
+          <Search2Icon w="5" h="5" />
+        </Button>
+      </Tooltip>
       <Drawer
         isOpen={isOpen}
         placement="right"

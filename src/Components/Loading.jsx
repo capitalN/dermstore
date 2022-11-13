@@ -4,8 +4,11 @@ import React from "react";
 export default function Loading() {
   return (
     <>
-      <Stack>
-        <Skeleton height="100vh" />
+      <Stack p="20">
+        <Skeleton height="20vh" />
+        <Skeleton height="20vh" />
+        <Skeleton height="20vh" />
+        <Skeleton height="20vh" />
       </Stack>
     </>
   );
