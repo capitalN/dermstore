@@ -7,23 +7,46 @@ import {
   Heading,
   Image,
   Skeleton,
+  Stack,
   Text,
   Tooltip,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React from "react";
+import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { AllContext } from "../Context/AllContextProvider";
+/*
+http://localhost:3004/cart
+json-server --watch db.json --port 3004
+*/
 
-export default function ProductCard({
-  name,
-  brand,
-  img = "https://i.ibb.co/VNnNFYS/1.png",
-  price,
-  categeory,
-  type,
-  rating,
-}) {
+let PushToCart = async (addCart) => {
+  await axios({
+    method: "post",
+    url: "http://localhost:3004/cart",
+    data: addCart,
+  });
+};
+
+export default function ProductCard({ name, id, img, price, type, rating,qty=1 }) {
   let [loading, setLoading] = useState(false);
+  let [addCart, setAddCart] = useState({});
+  let { state } = useContext(AllContext);
+
+  let handleAddCart = () => {
+    setAddCart((prev) => ({
+      ...prev,
+      userId: id,
+      name,
+      img,
+      price,
+      type,
+      qty,
+    }));
+    PushToCart(addCart);
+  };
 
   useEffect(() => {
     if ({ name }) {
@@ -62,11 +85,8 @@ export default function ProductCard({
             </Badge>
           </Flex>
           <Tooltip label="Add to Cart" placement="right">
-            <Button
-              colorScheme="pink"
-              size="xs"
-            >
-              $ {price}
+            <Button colorScheme="pink" size="sm" onClick={handleAddCart}>
+              ₹ {Math.floor(price)}
             </Button>
           </Tooltip>
         </Flex>
@@ -74,3 +94,5 @@ export default function ProductCard({
     </>
   );
 }
+
+

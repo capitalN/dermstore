@@ -39,7 +39,7 @@ let inputLinks = [
   },
   { to: "/products", title: "products" },
   { to: "/cart", title: "cart" },
-  { to: "/login", title: "more" },
+  { to: "/more", title: "more" },
 ];
 
 export default function Navbar() {
@@ -60,7 +60,7 @@ export default function Navbar() {
           pl="5"
           pr="5"
           top="0"
-          boxShadow="xl"
+          background="gray.100"
         >
           <IconButton
             size={"md"}

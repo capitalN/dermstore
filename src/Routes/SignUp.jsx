@@ -63,7 +63,14 @@ export default function SignUp() {
   };
 
   return (
-    <Flex m="200" flexDirection="column" justify="center" align="center">
+    <Flex
+      flexDirection="column"
+      justify="center"
+      align="center"
+      h="100vh"
+      w="100vw"
+      bg="white"
+    >
       <Stack w="xs" padding="5" boxShadow="xl" p="6" rounded="md" bg="white">
         <Heading>Sign Up</Heading>
         <Input

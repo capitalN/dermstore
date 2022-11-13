@@ -15,8 +15,18 @@ export default function AllContextProvider({ children }) {
     setState({ ...state, auth: false, token: "" });
   };
 
+  let setParams = ({ categeory, subcategeory, min, max }) => {
+    setState({ ...state, categeory, subcategeory, min, max });
+  };
+
+  let setPriceRange = ({ min, max }) => {
+    setState({ ...state, min, max });
+  };
+
   return (
-    <AllContext.Provider value={{ state, logIn, logOut }}>
+    <AllContext.Provider
+      value={{ state, logIn, logOut, setParams, setPriceRange }}
+    >
       {children}{" "}
     </AllContext.Provider>
   );

@@ -8,6 +8,7 @@ import {
   Stack,
   // Link,
   Button,
+  Center,
   Heading,
   Text,
   useColorModeValue,
@@ -19,6 +20,8 @@ import { AllContext } from "../Context/AllContextProvider";
 import axios from "axios";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
 import Loading from "../Components/Loading";
 
 let fetchLogin = (input) => {
@@ -78,7 +81,14 @@ export default function SignIn() {
   };
 
   return (
-    <Flex m="200" flexDirection="column" justify="center" align="center">
+    <Flex
+      flexDirection="column"
+      justify="center"
+      align="center"
+      h="100vh"
+      w="100vw"
+      bg="white"
+    >
       <Stack w="xs" padding="5" boxShadow="xl" p="6" rounded="md" bg="white">
         <Heading>Login</Heading>
         <Input
@@ -106,6 +116,8 @@ export default function SignIn() {
         >
           LOGIN
         </Button>
+        <Divider />
+
         <Text>
           dont have an account?
           <Link
