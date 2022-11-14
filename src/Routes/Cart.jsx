@@ -37,7 +37,6 @@ export default function Cart() {
 
   useEffect(() => {
     fetchData();
-   
   }, [state]);
 
   if (!state.auth) return <Navigate to="/" />;
@@ -75,7 +74,7 @@ export function CartCard({
   id,
 }) {
 
-  useEffect(() => {},[]);
+  useEffect(() => {}, []);
 
   return (
     <>

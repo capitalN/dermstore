@@ -1,16 +1,43 @@
 {
   "cart": [
     {
+      "id": 1
+    },
+    {
+      "userId": 488,
+      "name": "Maybelline Fit Me Bronzer",
+      "image_link": "https://d3t32hsnjxo7q6.cloudfront.net/i/d4f7d82b4858c622bb3c1cef07b9d850_ra,w158,h184_pa,w158,h184.png",
+      "price": 823.1999999999999,
+      "type": "bronzer",
+      "qty": 1,
+      "id": 2
+    },
+    {
       "id": 3
     },
     {
-      "userId": 1046,
-      "name": "Lippie Stix",
-      "image_link": "https://cdn.shopify.com/s/files/1/1338/0845/collections/blottedlip-lippie-stix_grande.jpg?v=1512588803",
-      "price": 440,
-      "type": "lipstick",
-      "qty": 1,
       "id": 4
+    },
+    {
+      "userId": 414,
+      "name": "Maybelline Dream Bouncy Blush",
+      "image_link": "https://d3t32hsnjxo7q6.cloudfront.net/i/51eacb9efebbaee39399e65ffe3d9416_ra,w158,h184_pa,w158,h184.png",
+      "price": 959.2,
+      "type": "blush",
+      "qty": 1,
+      "id": 5
+    },
+    {
+      "id": 6
+    }
+  ],
+  "users": [
+    {
+      "name": "nikhil",
+      "email": "angolkarnikhil@gmail.com",
+      "password": "123",
+      "token": 0.7034329163370687,
+      "id": 1
     }
   ]
 }

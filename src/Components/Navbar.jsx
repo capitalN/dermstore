@@ -22,6 +22,7 @@ import {
   PopoverTrigger,
   color,
   Divider,
+  border,
 } from "@chakra-ui/react";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { useContext } from "react";
@@ -124,6 +125,12 @@ export default function Navbar() {
 
 export function AvatarComponent() {
   let { state, logOut } = useContext(AllContext);
+
+  let img;
+  if (state.auth) {
+    img = "https://ca.slack-edge.com/T044M5T44JV-U0462RS10FK-010c46713479-512";
+  }
+
   return (
     <Flex alignItems={"center"}>
       <Menu>
@@ -134,12 +141,7 @@ export function AvatarComponent() {
           cursor={"pointer"}
           minW={0}
         >
-          <Avatar
-            size={"sm"}
-            src={
-              "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-            }
-          />
+          <Avatar size={"sm"} src={img} />
         </MenuButton>
         <MenuList>
           <Link to="/profile">

@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
   Tooltip,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
@@ -17,6 +18,7 @@ import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { AllContext } from "../Context/AllContextProvider";
+import SingleProduct from "./SingleProduct";
 /*
 http://localhost:3004/cart
 json-server --watch db.json --port 3004
@@ -42,18 +44,24 @@ export default function ProductCard({
   let [loading, setLoading] = useState(false);
   let [addCart, setAddCart] = useState({});
   let { state } = useContext(AllContext);
+  const toast = useToast();
 
   let handleAddCart = () => {
     setAddCart((prev) => ({
       ...prev,
       userId: id,
       name,
-      image_link:img,
+      image_link: img,
       price,
       type,
       qty,
     }));
-    PushToCart(addCart)
+    PushToCart(addCart);
+    toast({
+      title: "added to cart",
+      position: "top",
+      isClosable: true,
+    });
   };
 
   useEffect(() => {

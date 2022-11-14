@@ -83,7 +83,7 @@ export default function SignUp() {
           isInvalid={input.name ? false : true}
         />
         <Input
-          placeholder="eve.holt@reqres.in"
+          placeholder="email"
           name="email"
           value={input.email}
           type="email"

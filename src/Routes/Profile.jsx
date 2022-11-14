@@ -29,11 +29,11 @@ export default function Profile() {
         <Image
           borderRadius="full"
           boxSize="150px"
-          src="https://bit.ly/dan-abramov"
-          alt="Dan Abramov"
+          src="https://ca.slack-edge.com/T044M5T44JV-U0462RS10FK-010c46713479-512"
+          alt="nikhil"
         />
-        <Text fontSize="xl">Dan Abramov</Text>
-        <Text>danabramov@gmail.com</Text>
+        <Text fontSize="xl">Nikhil</Text>
+        <Text>eve.holt@reqres.in</Text>
         <Button colorScheme="red" onClick={logOut}>
           LOGOUT
         </Button>

@@ -92,7 +92,7 @@ export default function SignIn() {
       <Stack w="xs" padding="5" boxShadow="xl" p="6" rounded="md" bg="white">
         <Heading>Login</Heading>
         <Input
-          placeholder="eve.holt@reqres.in"
+          placeholder="email"
           name="email"
           value={input.email}
           type="email"

@@ -3,7 +3,15 @@ import { useEffect } from "react";
 import axios from "axios";
 import { AllContext } from "../Context/AllContextProvider";
 import ProductCard from "../Components/ProductCard";
-import { Container, Flex, Grid, GridItem, Heading, Image, Stack } from "@chakra-ui/react";
+import {
+  Container,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Image,
+  Stack,
+} from "@chakra-ui/react";
 import Loading from "../Components/Loading";
 import FilterDrower from "../Components/FilterDrower";
 
@@ -27,7 +35,7 @@ export default function Products() {
     await getData(state)
       .then((res) => setData(res.data))
       .catch();
-    // setLoading(false);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -35,7 +43,7 @@ export default function Products() {
     // console.log(data);
   }, [state]);
 
-  // if (loading) return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <Container as={Stack} maxW={"6xl"} mt="20">
