@@ -1,7 +1,7 @@
 const express = require("express");
 const { connect } = require("./configs/db");
 const cors = require("cors");
-const { ProductsRouter } = require("./routes/products.routes");
+const { ProductRouter } = require("./routes/products.routes");
 require("dotenv").config();
 
 let app = express();
@@ -16,8 +16,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.use("/products", ProductsRouter);
-
+app.use("/products", ProductRouter);
 
 app.listen(8080, async () => {
   try {

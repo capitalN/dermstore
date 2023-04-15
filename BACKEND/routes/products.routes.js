@@ -1,9 +1,9 @@
 const { isAdmin } = require("../middlewares/admin.middleware");
 const { ProductModel } = require("../models/product.model");
-let ProductsRouter = require("express").Router();
+let ProductRouter = require("express").Router();
 
 // getting all queries with filters, sort & pagination
-ProductsRouter.get("/", async (req, res) => {
+ProductRouter.get("/", async (req, res) => {
   const {
     product_type,
     category,
@@ -12,7 +12,7 @@ ProductsRouter.get("/", async (req, res) => {
     min,
     max,
     tag_list,
-    limit,
+    limit=12,
     page = 1,
     order,
   } = req.query;
@@ -40,7 +40,7 @@ ProductsRouter.get("/", async (req, res) => {
 });
 
 // getting searched products
-ProductsRouter.get("/search", async (req, res) => {
+ProductRouter.get("/search", async (req, res) => {
   const query = req.query;
   try {
     if (query["q"].length) {
@@ -68,7 +68,7 @@ ProductsRouter.get("/search", async (req, res) => {
 });
 
 // getting by id
-ProductsRouter.get("/:id", async (req, res) => {
+ProductRouter.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const product = await ProductModel.findById({ _id: id });
@@ -79,7 +79,7 @@ ProductsRouter.get("/:id", async (req, res) => {
 });
 
 // adding prodouct
-ProductsRouter.post("/products", isAdmin, async (req, res) => {
+ProductRouter.post("/", isAdmin, async (req, res) => {
   try {
     const product = new ProductModel(req.body);
     await product.save();
@@ -92,7 +92,7 @@ ProductsRouter.post("/products", isAdmin, async (req, res) => {
 });
 
 // updating product
-ProductsRouter.patch("/products/:id", async (req, res) => {
+ProductRouter.patch("/:id", isAdmin, async (req, res) => {
   try {
     const product = await ProductModel.findByIdAndUpdate(
       req.params.id,
@@ -111,7 +111,7 @@ ProductsRouter.patch("/products/:id", async (req, res) => {
 });
 
 // delete product
-ProductsRouter.delete("/products/:id", async (req, res) => {
+ProductRouter.delete("/:id", isAdmin, async (req, res) => {
   try {
     const product = await ProductModel.findByIdAndDelete(req.params.id);
     if (!product) {
@@ -124,4 +124,4 @@ ProductsRouter.delete("/products/:id", async (req, res) => {
   }
 });
 
-module.exports = { ProductsRouter };
+module.exports = { ProductRouter };
