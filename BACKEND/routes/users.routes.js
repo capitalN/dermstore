@@ -56,7 +56,7 @@ UserRouter.get("/me", verifyUser, async (req, res) => {
 UserRouter.patch("/me", verifyUser, async (req, res) => {
   try {
     if (req.body.password) {
-      req.body.password = await bcrypt.hash(req.body.password, 10);
+      req.body.password = await bcrypt.hash(req.body.password, 5);
     }
     const user = await UserModel.findByIdAndUpdate(req.user._id, req.body, {
       new: true,
@@ -68,11 +68,14 @@ UserRouter.patch("/me", verifyUser, async (req, res) => {
 });
 
 // delete user
-UserRouter.delete("/me", verifyUser, async (req, res) => {
-  try {
-    const user = await UserModel.findByIdAndDelete(req.user._id);
-    res.send(user);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
+// UserRouter.delete("/me", verifyUser, async (req, res) => {
+//   try {
+//     const user = await UserModel.findByIdAndDelete(req.user._id);
+//     res.send(user);
+//   } catch (err) {
+//     res.status(500).send(err);
+//   }
+// });
+
+
+module.exports = {UserRouter}

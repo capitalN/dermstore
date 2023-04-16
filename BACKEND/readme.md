@@ -1,1 +1,1 @@
-new
+npm i express mongoose dotenv jsonwebtoken bcrypt

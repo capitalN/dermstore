@@ -12,7 +12,7 @@ ProductRouter.get("/", async (req, res) => {
     min,
     max,
     tag_list,
-    limit=12,
+    limit = 12,
     page = 1,
     order,
   } = req.query;
@@ -20,7 +20,7 @@ ProductRouter.get("/", async (req, res) => {
   if (product_type) filter.product_type = product_type;
   if (category) filter.category = category;
   if (brand) filter.brand = brand;
-  if (tag_list) filter.tags = tag_list;
+  if (tag_list) filter.tag_list = tag_list;
   if (min || max) {
     filter.price = {};
     if (min) filter.price.$gte = min;
@@ -29,7 +29,11 @@ ProductRouter.get("/", async (req, res) => {
 
   try {
     let query = ProductModel.find(filter);
-    if (sort) query = query.sort({ [sort]: order });
+    // it will sort price (String) lexicographically so .colleation is used.
+    if (sort)
+      query = query
+        .sort({ [sort]: order })
+        .collation({ locale: "en_US", numericOrdering: true });
     if (limit) query = query.limit(Number(limit));
     if (page) query = query.skip(Number(page - 1) * Number(limit));
     const data = await query.exec();
@@ -125,3 +129,15 @@ ProductRouter.delete("/:id", isAdmin, async (req, res) => {
 });
 
 module.exports = { ProductRouter };
+
+// for multiple categories comma saperated
+// app.get('/products', function(req, res) {
+//   const categories = req.query.categories.split(',');
+//   Product.find({ category: { $in: categories } }, function(err, products) {
+//     if (err) {
+//       // handle error
+//     } else {
+//       // do something with the products
+//     }
+//   });
+// });
