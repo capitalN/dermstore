@@ -3,30 +3,43 @@ import {
   USER_LOADING,
   USER_LOGIN,
   USER_REGISTER,
+  USER_WARNING,
 } from "./actionTypes";
 
 let token = localStorage.getItem("token") || "";
+let user = JSON.parse(localStorage.getItem("user")) || {};
 
 const initialState = {
   token,
-  payload: "",
+  user,
   loading: false,
+  success: false,
   error: false,
 };
 
-export const UserReducer = (state = initialState, { type, payload }) => {
+export const UserReducer = (
+  state = initialState,
+  { type, token, error, user }
+) => {
   switch (type) {
     case USER_REGISTER: {
       return {
         ...state,
-        payload,
+        success: "register sucessfull, please login",
+        loading: false,
+        error: false,
       };
     }
     case USER_LOGIN: {
-      localStorage.setItem("token", payload);
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
       return {
         ...state,
-        token: payload,
+        token,
+        success: "login sucessfull",
+        user,
+        loading: false,
+        error: false,
       };
     }
     case USER_LOADING: {
@@ -34,13 +47,23 @@ export const UserReducer = (state = initialState, { type, payload }) => {
         ...state,
         loading: true,
         error: false,
+        success: false,
+      };
+    }
+    case USER_WARNING: {
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        success: false,
       };
     }
     case USER_ERROR: {
       return {
         ...state,
         loading: false,
-        error: payload,
+        success: false,
+        error,
       };
     }
     default:

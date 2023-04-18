@@ -34,9 +34,6 @@ export default function Navbar() {
           LOGO
         </Heading>
         <HStack justifySelf={"right"}>
-          <Text as={Link} to="/search" boxSize={"25px"}>
-            S
-          </Text>
           <Text as={Link} to="/user" boxSize={"25px"}>
             U
           </Text>
@@ -53,7 +50,7 @@ function NavLinks() {
   return (
     <Stack justify={"space-around"} p="10px">
       {LINKS.map((link) => (
-        <Text as={Link} to={`/products?product_type=${link}`}>
+        <Text as={Link} key={link} to={`/products?product_type=${link}`}>
           {link}
         </Text>
       ))}
@@ -84,7 +81,7 @@ function NavDrawer() {
   );
 }
 
-let LINKS = [
+export let LINKS = [
   "blush",
   "bronzer",
   "eyeliner",

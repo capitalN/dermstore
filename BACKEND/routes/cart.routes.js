@@ -1,49 +1,13 @@
 const { CartModel } = require("../models/cart.model");
 let CartRouter = require("express").Router();
 
-// getting all queries with filters, sort & pagination
 CartRouter.get("/", async (req, res) => {
+  let { _id } = req.user;
   try {
-    let query = CartModel.find({});
-    // it will sort price (String) lexicographically so .colleation is used.
-    if (sort)
-      query = query
-        .sort({ [sort]: order })
-        .collation({ locale: "en_US", numericOrdering: true });
-    if (limit) query = query.limit(Number(limit));
-    if (page) query = query.skip(Number(page - 1) * Number(limit));
-    const data = await query.exec();
-    res.send(data);
+    const cart = await CartModel.find({ userId: _id }).populate("productId")
+    res.send(cart);
   } catch (err) {
     res.status(500).send(err);
-  }
-});
-
-// getting searched carts
-CartRouter.get("/search", async (req, res) => {
-  const query = req.query;
-  try {
-    if (query["q"].length) {
-      // regex: pattern to match agains values
-      // options:"i" not case senitive
-      const searchQuery = { $regex: `${query["q"]}`, $options: "i" };
-      const searched = await CartModel.find({
-        $or: [
-          { brand: searchQuery },
-          { name: searchQuery },
-          { category: searchQuery },
-        ],
-      }).limit(10);
-      res.send(searched);
-    } else {
-      res.send({
-        msg: "Please type to search by name, brand or category",
-        error: "q is not passed",
-      });
-    }
-  } catch (error) {
-    // 500 internal server error
-    res.status(500).send({ msg: `error in searching carts`, error });
   }
 });
 
@@ -51,23 +15,23 @@ CartRouter.get("/search", async (req, res) => {
 CartRouter.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    const cart = await CartModel.findById({ _id: id });
+    const cart = await CartModel.findById({ _id: id }).populate("productId")
     res.send(cart);
   } catch (error) {
-    res.send({ msg: `can't get cart of id ${id}`, error });
+    res.send({ error });
   }
 });
 
 // adding prodouct
 CartRouter.post("/", async (req, res) => {
+  let { _id } = req.user;
+  let body = req.body;
   try {
-    const cart = new CartModel(req.body);
+    const cart = new CartModel({ ...body, userId: _id });
     await cart.save();
-    // 201 Created success
     res.status(201).send(cart);
-  } catch (err) {
-    // 500
-    res.status(500).send(err);
+  } catch (error) {
+    res.status(500).send({error});
   }
 });
 
@@ -76,7 +40,7 @@ CartRouter.patch("/:id", async (req, res) => {
   try {
     const cart = await CartModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-    });
+    }).populate("productId")
     if (!cart) {
       // 404 not found
       res.status(404).send("Cart not found");
