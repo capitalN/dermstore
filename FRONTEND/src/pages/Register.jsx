@@ -14,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { user_register } from "../redux/user/actions";
+import { ButtonStyle } from "../utils/styles";
 
 const initialData = {
   username: "",
@@ -40,7 +41,10 @@ export default function Register() {
 
   return (
     <Center h="100vh">
-      <form action="" onSubmit={(e) => handleSubmit(e)}>
+      <form
+        action=""
+        onSubmit={(e) => handleSubmit(e)}
+      >
         <Stack w="300px">
           <Heading>REGISTER</Heading>
           <br />
@@ -69,7 +73,9 @@ export default function Register() {
             required
           />
           <br />
-          <Button type="submit">SIGN UP</Button>
+          <Button type="submit" {...ButtonStyle}>
+            SIGN UP
+          </Button>
           <br />
           <Text as={Link} to={"/login"} textAlign="center">
             already a user? click here to{" "}

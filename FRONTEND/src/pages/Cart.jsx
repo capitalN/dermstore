@@ -1,4 +1,6 @@
 import {
+  Button,
+  ButtonGroup,
   Flex,
   Grid,
   HStack,
@@ -12,6 +14,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { delete_from_cart, get_cart, update_cart } from "../redux/cart/actions";
+import { ButtonStyle } from "../utils/styles";
 
 export default function Cart() {
   const { cart } = useSelector((store) => store.CartReducer);
@@ -45,8 +48,17 @@ export default function Cart() {
         alignContent={"center"}
       >
         {cart.map(({ _id, productId, quantity }) => (
-          <Stack key={_id} overflow="hidden" m="10px">
-            <Stack as={Link} to={`/products/${productId._id}`}>
+          <Stack
+            key={_id}
+            overflow="hidden"
+            p={"20px"}
+            border="1px solid rgb(196, 196, 196)"
+          >
+            <Stack
+              as={Link}
+              to={`/products/${productId._id}`}
+              target={"_blank"}
+            >
               <Image
                 src={productId.api_featured_image}
                 boxSize={"300px"}
@@ -64,17 +76,19 @@ export default function Cart() {
             </Stack>
             <HStack justify={"space-between"}>
               <form onClick={(e) => handleUpdate(e, _id, quantity)}>
-                <HStack gap={"10px"}>
-                  <button disabled={quantity === 1} value={-1}>
+                <ButtonGroup variant={"ghost"}>
+                  <Button isDisabled={quantity === 1} value={-1}>
                     -
-                  </button>
-                  <button disabled>{quantity}</button>
-                  <button disabled={quantity === 10} value={1}>
+                  </Button>
+                  <Button value={0}>{quantity}</Button>
+                  <Button isDisabled={quantity === 10} value={1}>
                     +
-                  </button>
-                </HStack>
+                  </Button>
+                </ButtonGroup>
               </form>
-              <button onClick={() => handleDelete(_id)}>remove</button>
+              <Button variant={"ghost"} onClick={() => handleDelete(_id)}>
+                remove
+              </Button>
             </HStack>
           </Stack>
         ))}

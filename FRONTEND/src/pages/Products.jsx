@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { get_products } from "../redux/products/actions";
 import Filters from "../components/Filters";
+import Pagination from "../components/Pagination";
+import Search from "../components/Search";
 
 export default function Products() {
   let { search } = window.location;
@@ -30,7 +32,19 @@ export default function Products() {
 
   return (
     <>
-      <Filters lastEl={products[11]} />
+      <Grid gridTemplateColumns={"repeat(3, 1fr)"} p="10px" gap="10px">
+        <Box justifySelf={"left"}>
+          <Search />
+        </Box>
+
+        <Box justifySelf={"center"}>
+          <Pagination lastEl={products[11]} />
+        </Box>
+
+        <Box justifySelf={"right"}>
+          <Filters />
+        </Box>
+      </Grid>
       <Grid
         gridTemplateColumns={{
           base: "repeat(1, 1fr)",
@@ -51,7 +65,15 @@ export default function Products() {
             price = 0.0,
             rating = 2.5,
           }) => (
-            <Stack key={_id} overflow="hidden" as={Link} to={`${_id}`} m="10px">
+            <Stack
+              key={_id}
+              overflow="hidden"
+              as={Link}
+              to={`${_id}`}
+              p={"20px"}
+              border="1px solid rgb(196, 196, 196)"
+              target={"_blank"}
+            >
               <Image
                 src={api_featured_image}
                 boxSize={"300px"}

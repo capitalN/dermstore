@@ -1,5 +1,6 @@
 import {
   USER_ERROR,
+  USER_GET,
   USER_LOADING,
   USER_LOGIN,
   USER_REGISTER,
@@ -7,11 +8,10 @@ import {
 } from "./actionTypes";
 
 let token = localStorage.getItem("token") || "";
-let user = JSON.parse(localStorage.getItem("user")) || {};
 
 const initialState = {
   token,
-  user,
+  user: {},
   loading: false,
   success: false,
   error: false,
@@ -19,7 +19,7 @@ const initialState = {
 
 export const UserReducer = (
   state = initialState,
-  { type, token, error, user }
+  { type, payload, token, error }
 ) => {
   switch (type) {
     case USER_REGISTER: {
@@ -32,14 +32,22 @@ export const UserReducer = (
     }
     case USER_LOGIN: {
       localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      window.location.href = "/";
       return {
         ...state,
         token,
         success: "login sucessfull",
-        user,
         loading: false,
         error: false,
+      };
+    }
+    case USER_GET: {
+      return {
+        ...state,
+        user: payload,
+        loading: false,
+        error: false,
+        success: "getting user",
       };
     }
     case USER_LOADING: {

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { add_to_cart } from "../redux/cart/actions";
 import { get_single_product } from "../redux/products/actions";
+import { ButtonStyle } from "../utils/styles";
 
 export default function ProductDetails() {
   const { products } = useSelector((store) => store.ProductReducer);
@@ -87,7 +88,9 @@ export default function ProductDetails() {
           <Text>category : {category}</Text>
           <Text>type : {product_type}</Text>
           <Text>tags : {tag_list}</Text>
-          <Button onClick={() => handleAdd(_id)}>Add to Cart</Button>
+          <Button onClick={() => handleAdd(_id)} {...ButtonStyle}>
+            Add to Cart
+          </Button>
           <Divider />
           <Text>DESCRIPTION</Text>
           <Text>

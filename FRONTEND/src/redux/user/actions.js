@@ -2,11 +2,14 @@ import axios from "axios";
 import { baseURL } from "../base";
 import {
   USER_ERROR,
+  USER_GET,
   USER_LOADING,
   USER_LOGIN,
   USER_REGISTER,
   USER_WARNING,
 } from "./actionTypes";
+
+let token = localStorage.getItem("token") || "";
 
 export const user_register = (data) => async (dispatch) => {
   dispatch({ type: USER_LOADING });
@@ -54,5 +57,26 @@ export const user_login = (data) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: USER_ERROR, error: "wrong credentials" });
+  }
+};
+
+export const get_user = () => async (dispatch) => {
+  dispatch({ type: USER_LOADING });
+  try {
+    let res = await axios({
+      method: "GET",
+      baseURL,
+      url: `users/me`,
+      headers: {
+        Authorization: token,
+      },
+    });
+    let payload = res.data;
+    dispatch({
+      type: USER_GET,
+      payload,
+    });
+  } catch (error) {
+    dispatch({ type: USER_ERROR, error: "getting user failed" });
   }
 };

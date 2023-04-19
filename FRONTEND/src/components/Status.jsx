@@ -9,7 +9,7 @@ export default function Status() {
   const toast = useToast();
 
   useEffect(() => {
-    let { success, error } = user;
+    let { success, error, loading } = user;
     if (success) {
       MyToast(success, "success");
     } else if (error) {
@@ -18,7 +18,7 @@ export default function Status() {
   }, [user]);
 
   useEffect(() => {
-    let { success, error } = cart;
+    let { success, error, loading } = cart;
     if (success) {
       MyToast(success, "success");
     } else if (error) {

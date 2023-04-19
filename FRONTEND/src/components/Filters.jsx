@@ -8,14 +8,6 @@ import {
   DrawerOverlay,
   DrawerContent,
   useDisclosure,
-  Input,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   HStack,
   Radio,
   RadioGroup,
@@ -26,65 +18,12 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
+import { ButtonStyle } from "../utils/styles";
 
-let { search } = window.location;
-export default function Filters({ lastEl }) {
-  const [searchParams, setSearchParams] = useSearchParams(search);
-  const curr = Object.fromEntries([...searchParams]);
-  let { page = 1 } = curr;
-
-  const handlePage = (event) => {
-    let value = event.target.value;
-    setSearchParams({ ...curr, page: +page + +value });
-  };
-
-  return (
-    <HStack justify={"space-between"} p="10px" gap="10px">
-      {/* pagination */}
-      <Box>
-        <ButtonGroup colorScheme={"purple"} fontWeight="bolder">
-          <Button onClick={handlePage} value={-1} isDisabled={page == 1}>
-            {+page - 1}
-          </Button>
-          <Button>{page}</Button>
-          <Button onClick={handlePage} value={+1} isDisabled={!lastEl}>
-            {+page + 1}
-          </Button>
-        </ButtonGroup>
-      </Box>
-
-      {/* filter */}
-      <Box justifySelf={"right"}>
-        <Filter />
-      </Box>
-    </HStack>
-  );
-}
-
-export function Search() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  return (
-    <>
-      <button onClick={onOpen}>
-        <Input placeholder="search by name, brand, category" />
-      </button>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalBody>
-            <Input placeholder="search by name, brand, category" />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-}
-
-export function Filter() {
+export default function Filters() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-
+  let { search } = window.location;
   const [searchParams, setSearchParams] = useSearchParams(search);
   const curr = Object.fromEntries([...searchParams]);
   let { page = 1, sort, order, brand, tag_list } = curr;
@@ -102,7 +41,7 @@ export function Filter() {
 
   return (
     <>
-      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+      <Button ref={btnRef} onClick={onOpen} {...ButtonStyle}>
         Filters
       </Button>
       <Drawer

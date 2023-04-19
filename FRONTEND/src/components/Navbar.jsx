@@ -1,93 +1,217 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
   Box,
-  Grid,
   Heading,
-  Hide,
   HStack,
-  Input,
-  Show,
-  Stack,
   Text,
+  Stack,
+  Show,
+  useDisclosure,
   Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
   DrawerOverlay,
   DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  PopoverArrow,
   DrawerCloseButton,
-  Button,
-  useDisclosure,
+  Grid,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { RiAccountCircleLine, RiShoppingCartLine } from "react-icons/ri";
 
 export default function Navbar() {
   return (
-    <Box>
-      <Grid
-        gridTemplateColumns={"repeat(3,1fr)"}
-        alignItems="center"
-        p={"10px"}
-      >
-        <NavDrawer />
-        <Heading as={Link} to="/" justifySelf="center">
-          LOGO
-        </Heading>
-        <HStack justifySelf={"right"}>
-          <Text as={Link} to="/user" boxSize={"25px"}>
-            U
-          </Text>
-          <Text as={Link} to="/cart" boxSize={"25px"}>
-            C
-          </Text>
-        </HStack>
-      </Grid>
+    <Box
+      zIndex={1000}
+      p="10px"
+      bgColor={"gray.700"}
+      color="white"
+      position="sticky"
+      top="0"
+    >
+      <Show below="lg">
+        <Grid gridTemplateColumns={"repeat(3, 1fr)"} alignItems={"center"}>
+          <NavDrawer />
+
+          <Heading as={Link} to="/" fontFamily="inherit" justifySelf={"center"}>
+            DermStore
+          </Heading>
+          <HStack justifySelf={"right"} gap="10px">
+            <Link to="/account">
+              <RiAccountCircleLine size={"30"} />
+            </Link>
+            <Link to="/cart">
+              <RiShoppingCartLine size={"30"} />
+            </Link>
+          </HStack>
+        </Grid>
+      </Show>
+
+      <Show above="lg">
+        <Grid gridTemplateColumns={"repeat(3, 1fr)"} alignItems={"center"}>
+          <Box>
+            <Heading as={Link} to="/" fontFamily="inherit">
+              DermStore
+            </Heading>
+          </Box>
+          <HStack justify={"space-evenly"} gap="20px" justifySelf={"center"}>
+            {LINKS.map((main) => (
+              <div key={main.type}>
+                <DropDown main={main} />
+              </div>
+            ))}
+          </HStack>
+
+          <HStack justifySelf={"right"} gap="10px">
+            <Link to="/user">
+              <RiAccountCircleLine size={"30"} />
+            </Link>
+            <Link to="/cart">
+              <RiShoppingCartLine size={"30"} />
+            </Link>
+          </HStack>
+        </Grid>
+      </Show>
     </Box>
   );
 }
 
-function NavLinks() {
+const DropDown = ({ main, onClose }) => {
   return (
-    <Stack justify={"space-around"} p="10px">
-      {LINKS.map((link) => (
-        <Text as={Link} key={link} to={`/products?product_type=${link}`}>
-          {link}
-        </Text>
-      ))}
-    </Stack>
+    <>
+      <Popover key={main.type}>
+        <PopoverTrigger>
+          <button>{main.type.toUpperCase()}</button>
+        </PopoverTrigger>
+        <PopoverContent w="auto">
+          <PopoverArrow />
+          <Stack justify={"space-between"} p="20px" color={"black"}>
+            <Stack w="140px">
+              <Text
+                as={Link}
+                to={`/products?product_type=${main.type}`}
+                _hover={{ fontWeight: "bold" }}
+                onClick={onClose}
+              >
+                ALL
+              </Text>
+              {main.category &&
+                main.category.map((category) => (
+                  <Text
+                    as={Link}
+                    to={`/products?product_type=${main.type}&category=${category}`}
+                    key={category}
+                    _hover={{ fontWeight: "bold" }}
+                    target="_self"
+                    onClick={onClose}
+                  >
+                    {category}
+                  </Text>
+                ))}
+            </Stack>
+          </Stack>
+        </PopoverContent>
+      </Popover>
+    </>
   );
-}
+};
 
-function NavDrawer() {
+export function NavDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   return (
-    <>
-      <Button ref={btnRef} colorScheme="teal" onClick={onOpen} w="20px">
-        =
-      </Button>
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <NavLinks />
-        </DrawerContent>
-      </Drawer>
-    </>
+    <div>
+      <>
+        <Heading ref={btnRef} colorScheme="teal" onClick={onOpen} w="50px">
+          =
+        </Heading>
+        <Drawer
+          isOpen={isOpen}
+          placement="left"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerBody>
+              <Heading as={Link} to="" fontFamily="inherit">
+                DermStore
+              </Heading>
+              <br />
+              <br />
+              <Stack justify={"space-evenly"} gap="20px">
+                {LINKS.map((main) => (
+                  <div key={main.type}>
+                    <DropDown main={main} onClose={onClose} />
+                  </div>
+                ))}
+              </Stack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </>
+    </div>
   );
 }
 
-export let LINKS = [
-  "blush",
-  "bronzer",
-  "eyeliner",
-  "lipstick",
-  "nail_polish",
-  "eyebrow",
-  "foundation",
-  "mascara",
+const LINKS = [
+  {
+    type: "blush",
+    category: ["powder", "cream"],
+    tag: ["Natural", "Vegan", "Gluten Free", "Non-GMO", "Canadian"],
+  },
+  {
+    type: "bronzer",
+    category: ["powder"],
+    tag: [
+      "purpicks",
+      "EWG Verified",
+      "Vegan",
+      "Gluten Free",
+      "Natural",
+      "Canadian",
+    ],
+  },
+  {
+    type: "eyeliner",
+    category: ["liquid", "pencil", "gel", "cream"],
+    tag: [
+      "Natural",
+      "Organic",
+      "purpicks",
+      "CertClean",
+      "Vegan",
+      "Gluten Free",
+    ],
+  },
+  {
+    type: "lipstick",
+    category: ["lipstick"],
+    tag: [
+      "cruelty free",
+      "Chemical Free",
+      "Organic",
+      "purpicks",
+      "CertClean",
+      "Vegan",
+      "Gluten Free",
+    ],
+  },
+  {
+    type: "nail_polish",
+    tag: [
+      "Natural",
+      "Vegan",
+      "Gluten Free",
+      "Fair Trade",
+      "Sugar Free",
+      "Non-GMO",
+      "Dairy Free",
+      "Canadian",
+    ],
+  },
 ];

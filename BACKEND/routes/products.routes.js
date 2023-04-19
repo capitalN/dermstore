@@ -60,7 +60,7 @@ ProductRouter.get("/search", async (req, res) => {
       }).limit(10);
       res.send(searched);
     } else {
-      res.send({
+      res.status(404).send({
         msg: "Please type to search by name, brand or category",
         error: "q is not passed",
       });

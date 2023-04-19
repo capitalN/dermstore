@@ -6,6 +6,7 @@ import { Button, Center, Heading, Input, Stack, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { user_login } from "../redux/user/actions";
 import { Link } from "react-router-dom";
+import { ButtonStyle } from "../utils/styles";
 
 const initialData = {
   email: "",
@@ -53,7 +54,7 @@ export default function Login() {
             required
           />
           <br />
-          <Button type="submit">LOGIN</Button>
+          <Button type="submit" {...ButtonStyle}>LOGIN</Button>
           <br />
           <Text as={Link} to={"/register"} textAlign="center">
             new user? click here to{" "}
