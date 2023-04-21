@@ -4,6 +4,7 @@ import {
   USER_LOADING,
   USER_LOGIN,
   USER_REGISTER,
+  USER_UPDATE,
   USER_WARNING,
 } from "./actionTypes";
 
@@ -50,18 +51,20 @@ export const UserReducer = (
         success: "getting user",
       };
     }
+    case USER_UPDATE: {
+      // let updated = 
+      return {
+        ...state,
+        user: payload,
+        loading: false,
+        error: false,
+        success: "user updated",
+      };
+    }
     case USER_LOADING: {
       return {
         ...state,
         loading: true,
-        error: false,
-        success: false,
-      };
-    }
-    case USER_WARNING: {
-      return {
-        ...state,
-        loading: false,
         error: false,
         success: false,
       };

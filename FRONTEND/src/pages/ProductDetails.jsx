@@ -68,6 +68,7 @@ export default function ProductDetails() {
           w="100%"
           p="20px"
           style={{ aspectRatio: "1/1" }}
+          objectFit="scale-down"
         />
         <Stack gap="10px" p="20px">
           <HStack justify={"space-between"}>

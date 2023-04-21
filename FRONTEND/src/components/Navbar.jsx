@@ -40,7 +40,7 @@ export default function Navbar() {
             DermStore
           </Heading>
           <HStack justifySelf={"right"} gap="10px">
-            <Link to="/account">
+            <Link to="/user">
               <RiAccountCircleLine size={"30"} />
             </Link>
             <Link to="/cart">
@@ -63,6 +63,7 @@ export default function Navbar() {
                 <DropDown main={main} />
               </div>
             ))}
+            <Link to="/products">SHOP ALL</Link>
           </HStack>
 
           <HStack justifySelf={"right"} gap="10px">
@@ -90,14 +91,6 @@ const DropDown = ({ main, onClose }) => {
           <PopoverArrow />
           <Stack justify={"space-between"} p="20px" color={"black"}>
             <Stack w="140px">
-              <Text
-                as={Link}
-                to={`/products?product_type=${main.type}`}
-                _hover={{ fontWeight: "bold" }}
-                onClick={onClose}
-              >
-                ALL
-              </Text>
               {main.category &&
                 main.category.map((category) => (
                   <Text
@@ -199,19 +192,6 @@ const LINKS = [
       "CertClean",
       "Vegan",
       "Gluten Free",
-    ],
-  },
-  {
-    type: "nail_polish",
-    tag: [
-      "Natural",
-      "Vegan",
-      "Gluten Free",
-      "Fair Trade",
-      "Sugar Free",
-      "Non-GMO",
-      "Dairy Free",
-      "Canadian",
     ],
   },
 ];

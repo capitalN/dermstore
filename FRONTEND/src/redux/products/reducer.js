@@ -10,7 +10,6 @@ const initialState = {
   searched: [],
   loading: false,
   success: false,
-  warning: false,
   error: false,
 };
 
@@ -22,6 +21,7 @@ export const ProductReducer = (state = initialState, { type, payload }) => {
         products: payload,
         loading: false,
         error: false,
+        success: "getting products",
       };
     }
     case GET_SEARCHED: {
@@ -35,13 +35,15 @@ export const ProductReducer = (state = initialState, { type, payload }) => {
         ...state,
         loading: true,
         error: false,
+        success: false,
       };
     }
     case GET_PRODUCTS_ERROR: {
       return {
         ...state,
         loading: false,
-        error: true,
+        error: "error in getting products",
+        success: false,
       };
     }
     default:

@@ -41,7 +41,11 @@ export const add_to_cart = (data) => async (dispatch) => {
     let payload = res.data;
     dispatch({ type: ADD_CART, payload });
   } catch (error) {
-    dispatch({ type: CART_ERROR, error: "product is in cart" });
+    if (error.response.data === "Invalid token") {
+      dispatch({ type: CART_ERROR, error: "Invalid token, please login" });
+    } else {
+      dispatch({ type: CART_ERROR, error: "product is in cart" });
+    }
   }
 };
 

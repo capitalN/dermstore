@@ -1,12 +1,7 @@
 import {
   Button,
   Divider,
-  Grid,
-  GridItem,
-  HStack,
   Input,
-  InputGroup,
-  InputRightElement,
   Modal,
   ModalBody,
   ModalContent,
@@ -33,7 +28,19 @@ export default function Search() {
 
   function handleInput(e) {
     let { value } = e.target;
+    myEfficientFn(value);
+  }
+
+  const myEfficientFn = debounce(function (value) {
     dispatch(get_searched_products({ q: value }));
+  }, 1000);
+
+  function debounce(func, wait) {
+    let timeout;
+    return function () {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, arguments), wait);
+    };
   }
 
   function handleSubmit() {}
@@ -48,15 +55,10 @@ export default function Search() {
         <ModalOverlay />
         <ModalContent>
           <ModalBody>
-            <InputGroup>
-              <Input
-                placeholder="search by name, brand, category"
-                onInput={(e) => handleInput(e)}
-              />
-              <InputRightElement>
-                <Button>Q</Button>
-              </InputRightElement>
-            </InputGroup>
+            <Input
+              placeholder="search by name, brand, category"
+              onInput={(e) => handleInput(e)}
+            />
             <br />
             <Stack>
               {searched.map(({ _id, name, brand, category }) => (

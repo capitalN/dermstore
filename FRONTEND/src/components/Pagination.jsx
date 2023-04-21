@@ -17,13 +17,13 @@ export default function Pagination({ lastEl }) {
       <form onClick={(e) => handlePage(e)}>
         <ButtonGroup fontWeight="bolder" {...ButtonStyle}>
           <Button value={-1} isDisabled={page == 1}>
-            {+page - 1}
+            {"<<"}
           </Button>
           <Button fontWeight={"bold"} value={0}>
             {page}
           </Button>
           <Button value={+1} isDisabled={!lastEl}>
-            {+page + 1}
+            {">>"}
           </Button>
         </ButtonGroup>
       </form>

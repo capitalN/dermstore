@@ -8,6 +8,8 @@ import {
   Box,
   Badge,
   Container,
+  Center,
+  Heading,
 } from "@chakra-ui/react";
 import { Link, useSearchParams } from "react-router-dom";
 import React from "react";
@@ -28,10 +30,10 @@ export default function Products() {
     dispatch(get_products(params));
   }, [dispatch, searchParams]);
 
-  const { products } = useSelector((store) => store.ProductReducer);
+  const { products, loading } = useSelector((store) => store.ProductReducer);
 
   return (
-    <>
+    <Box minH={"100vh"}>
       <Grid gridTemplateColumns={"repeat(3, 1fr)"} p="10px" gap="10px">
         <Box justifySelf={"left"}>
           <Search />
@@ -45,53 +47,76 @@ export default function Products() {
           <Filters />
         </Box>
       </Grid>
-      <Grid
-        gridTemplateColumns={{
-          base: "repeat(1, 1fr)",
-          sm: "repeat(2, 1fr)",
-          md: "repeat(2, 1fr)",
-          lg: "repeat(4, 1fr)",
-          xl: "repeat(4, 1fr)",
-        }}
-        alignItems="center"
-        alignContent={"center"}
-      >
-        {products.map(
-          ({
-            _id,
-            api_featured_image,
-            brand = "undefined",
-            name = "undefined",
-            price = 0.0,
-            rating = 2.5,
-          }) => (
-            <Stack
-              key={_id}
-              overflow="hidden"
-              as={Link}
-              to={`${_id}`}
-              p={"20px"}
-              border="1px solid rgb(196, 196, 196)"
-              target={"_blank"}
-            >
-              <Image
-                src={api_featured_image}
-                boxSize={"300px"}
-                alignSelf="center"
-              />
-              <Stack>
-                <Text fontWeight={"bold"} overflow="hidden" whiteSpace="nowrap">
-                  {name}
-                </Text>
-                <HStack justify={"space-between"}>
-                  <Text fontWeight={"bold"}>{brand || "undefined"}</Text>
-                  <Text fontWeight={"bold"}>$ {price || "0.0"}</Text>
-                </HStack>
+      {products.length ? (
+        <Grid
+          gridTemplateColumns={{
+            base: "repeat(2, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+            xl: "repeat(4, 1fr)",
+          }}
+          alignItems="center"
+          alignContent={"center"}
+        >
+          {products.map(
+            ({
+              _id,
+              api_featured_image,
+              brand = "undefined",
+              name = "undefined",
+              price = 0.0,
+              rating = 2.5,
+            }) => (
+              <Stack
+                key={_id}
+                overflow="hidden"
+                as={Link}
+                to={`${_id}`}
+                p={{ base: "10px", md: "20px" }}
+                border="1px solid rgb(196, 196, 196)"
+                target={"_blank"}
+              >
+                <Skeleton isLoaded={!loading}>
+                  <Image
+                    src={api_featured_image}
+                    boxSize={{ base: "150px", md: "300px" }}
+                    alignSelf="center"
+                    objectFit="scale-down"
+                    ml={"auto"}
+                    mr={"auto"}
+                  />
+                </Skeleton>
+                <Stack>
+                  <Text
+                    fontWeight={"bold"}
+                    overflow="hidden"
+                    whiteSpace="nowrap"
+                  >
+                    {name}
+                  </Text>
+                  <HStack justify={"space-between"}>
+                    <Text fontWeight={"bold"}>{brand || "undefined"}</Text>
+                    <Text fontWeight={"bold"}>$ {price || "0.0"}</Text>
+                  </HStack>
+                </Stack>
               </Stack>
-            </Stack>
-          )
-        )}
-      </Grid>
-    </>
+            )
+          )}
+        </Grid>
+      ) : (
+        <Center>
+          <Skeleton
+            isLoaded={!loading}
+            bgImage="https://trolleymate.co.uk/assets/img/error_404.jpeg"
+            h="80vh"
+            w="100%"
+            bgRepeat={"no-repeat"}
+            bgSize="contain"
+            bgPosition={"center"}
+          ></Skeleton>
+        </Center>
+      )}
+    </Box>
   );
 }

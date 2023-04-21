@@ -1,13 +1,18 @@
 import {
+  Box,
   Button,
   ButtonGroup,
+  Center,
   Flex,
   Grid,
+  Heading,
   HStack,
   Image,
+  Skeleton,
   Spacer,
   Stack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import React from "react";
 import { useEffect } from "react";
@@ -17,7 +22,7 @@ import { delete_from_cart, get_cart, update_cart } from "../redux/cart/actions";
 import { ButtonStyle } from "../utils/styles";
 
 export default function Cart() {
-  const { cart } = useSelector((store) => store.CartReducer);
+  const { cart, loading } = useSelector((store) => store.CartReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,8 +39,35 @@ export default function Cart() {
     dispatch(delete_from_cart(_id));
   }
 
+  let total = cart.reduce(
+    (acc, { productId, quantity }) => acc + +productId.price * quantity,
+    0
+  );
+
+  if (!cart.length) {
+    return (
+      <Center h="100vh">
+        <VStack>
+          <Image
+            boxSize={"300px"}
+            src="https://media.istockphoto.com/id/861576608/vector/empty-shopping-bag-icon-online-business-vector-icon-template.jpg?s=612x612&w=0&k=20&c=I7MbHHcjhRH4Dy0NVpf4ZN4gn8FVDnwn99YdRW2x5k0="
+          />
+          <Heading fontFamily={"inherit"}>Cart is Empty!!!</Heading>
+          <br />
+          <Link to="/products">Click here to Continue Shopping</Link>
+        </VStack>
+      </Center>
+    );
+  }
+
   return (
-    <div>
+    <Box minH={"100vh"}>
+      <HStack p="10px" justify={"space-between"} w="full">
+        <Heading size={"md"}>Cart Total: $ {total}</Heading>
+        <Button as={Link} to="/dispatch" {...ButtonStyle}>
+          Dispatch
+        </Button>
+      </HStack>
       <Grid
         gridTemplateColumns={{
           base: "repeat(1, 1fr)",
@@ -51,7 +83,7 @@ export default function Cart() {
           <Stack
             key={_id}
             overflow="hidden"
-            p={"20px"}
+            p={{ base: "10px", md: "20px" }}
             border="1px solid rgb(196, 196, 196)"
           >
             <Stack
@@ -59,11 +91,17 @@ export default function Cart() {
               to={`/products/${productId._id}`}
               target={"_blank"}
             >
-              <Image
-                src={productId.api_featured_image}
-                boxSize={"300px"}
-                alignSelf="center"
-              />
+              <Skeleton isLoaded={!loading}>
+                <Image
+                  src={productId.api_featured_image}
+                  boxSize={{ base: "150px", md: "300px" }}
+                  alignSelf="center"
+                  objectFit="scale-down"
+                  display="block"
+                  ml={"auto"}
+                  mr={"auto"}
+                />
+              </Skeleton>
               <Text fontWeight={"bold"} overflow="hidden" whiteSpace="nowrap">
                 {productId.name}
               </Text>
@@ -76,7 +114,7 @@ export default function Cart() {
             </Stack>
             <HStack justify={"space-between"}>
               <form onClick={(e) => handleUpdate(e, _id, quantity)}>
-                <ButtonGroup variant={"ghost"}>
+                <ButtonGroup {...ButtonStyle}>
                   <Button isDisabled={quantity === 1} value={-1}>
                     -
                   </Button>
@@ -86,13 +124,16 @@ export default function Cart() {
                   </Button>
                 </ButtonGroup>
               </form>
-              <Button variant={"ghost"} onClick={() => handleDelete(_id)}>
-                remove
-              </Button>
+              <button
+                onClick={() => handleDelete(_id)}
+                style={{ color: "red" }}
+              >
+                REMOVE
+              </button>
             </HStack>
           </Stack>
         ))}
       </Grid>
-    </div>
+    </Box>
   );
 }

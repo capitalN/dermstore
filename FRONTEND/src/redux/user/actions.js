@@ -6,6 +6,7 @@ import {
   USER_LOADING,
   USER_LOGIN,
   USER_REGISTER,
+  USER_UPDATE,
   USER_WARNING,
 } from "./actionTypes";
 
@@ -13,16 +14,16 @@ let token = localStorage.getItem("token") || "";
 
 export const user_register = (data) => async (dispatch) => {
   dispatch({ type: USER_LOADING });
-  // let regex =
-  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-  // if (!regex.test(data.password)) {
-  //   dispatch({
-  //     type: USER_WARNING,
-  //     error:
-  //       "password must include atleast a uppercase, a lowercase, a number, a special character & 8 or more characters",
-  //   });
-  //   return;
-  // }
+  let regex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  if (!regex.test(data.password)) {
+    dispatch({
+      type: USER_ERROR,
+      error:
+        "password must include atleast a uppercase, a lowercase, a number, a special character & 8 or more characters",
+    });
+    return;
+  }
 
   try {
     let res = await axios({
@@ -56,6 +57,7 @@ export const user_login = (data) => async (dispatch) => {
       user,
     });
   } catch (error) {
+    console.log(error);
     dispatch({ type: USER_ERROR, error: "wrong credentials" });
   }
 };
@@ -78,5 +80,27 @@ export const get_user = () => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: USER_ERROR, error: "getting user failed" });
+  }
+};
+
+export const update_user = (data) => async (dispatch) => {
+  dispatch({ type: USER_LOADING });
+  try {
+    let res = await axios({
+      method: "patch",
+      baseURL,
+      url: `users/me`,
+      headers: {
+        Authorization: token,
+      },
+      data,
+    });
+    let payload = res.data;
+    dispatch({
+      type: USER_UPDATE,
+      payload,
+    });
+  } catch (error) {
+    dispatch({ type: USER_ERROR, error: "user update failed" });
   }
 };

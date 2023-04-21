@@ -24,6 +24,7 @@ export const get_products = (params) => async (dispatch) => {
       payload,
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: GET_PRODUCTS_ERROR,
       error: "failed to get products",

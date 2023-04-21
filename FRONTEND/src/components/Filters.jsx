@@ -15,6 +15,10 @@ import {
   Heading,
   Text,
   Divider,
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
 } from "@chakra-ui/react";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
@@ -26,11 +30,10 @@ export default function Filters() {
   let { search } = window.location;
   const [searchParams, setSearchParams] = useSearchParams(search);
   const curr = Object.fromEntries([...searchParams]);
-  let { page = 1, sort, order, brand, tag_list } = curr;
+  let { page = 1, sort, order, brand, tag_list, min = 0, max = 80 } = curr;
 
   let handleFilter = (e) => {
     let { name, value } = e.target;
-
     if (name === "sort") {
       let [sort, order] = value.split(",");
       setSearchParams({ ...curr, sort, order, page: 1 });
@@ -38,6 +41,11 @@ export default function Filters() {
       setSearchParams({ ...curr, [name]: value, page: 1 });
     }
   };
+
+  function handleRange(e) {
+    let [min, max] = e;
+    setSearchParams({ ...curr, min, max });
+  }
 
   return (
     <>
@@ -87,7 +95,8 @@ export default function Filters() {
               </RadioGroup>
               <Divider />
               <br />
-              <RadioGroup name="brand" value={brand}>
+
+              {/* <RadioGroup name="brand" value={brand}>
                 <Stack>
                   <HStack justify={"space-between"}>
                     <Text fontWeight={"bold"}>BRAND</Text>
@@ -100,8 +109,29 @@ export default function Filters() {
                     </Radio>
                   ))}
                 </Stack>
-              </RadioGroup>
+              </RadioGroup> */}
             </form>
+            <Box>
+              <Text fontWeight={"bold"}>PRICE</Text>
+              <RangeSlider
+                defaultValue={[min, max]}
+                min={0}
+                max={80}
+                step={10}
+                onChangeStart={(e) => handleRange(e)}
+                onChangeEnd={(e) => handleRange(e)}
+              >
+                <RangeSliderTrack>
+                  <RangeSliderFilledTrack />
+                </RangeSliderTrack>
+                <RangeSliderThumb index={0} />
+                <RangeSliderThumb index={1} />
+              </RangeSlider>
+              <HStack justify={"space-between"}>
+                <Text>$ {min}</Text>
+                <Text>$ {max}</Text>
+              </HStack>
+            </Box>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

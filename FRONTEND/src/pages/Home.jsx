@@ -1,4 +1,5 @@
 import { Box, Button, Center } from "@chakra-ui/react";
+import axios from "axios";
 import React from "react";
 
 export default function Home() {
@@ -12,8 +13,7 @@ export default function Home() {
         bgSize="cover"
         bgRepeat={"no-repeat"}
         bgPosition="center"
-      >
-      </Center>
+      ></Center>
     </Box>
   );
 }
