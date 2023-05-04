@@ -128,7 +128,7 @@ export function NavDrawer() {
           finalFocusRef={btnRef}
         >
           <DrawerOverlay />
-          <DrawerContent>
+          <DrawerContent bgColor={"gray.700"} color="white">
             <DrawerCloseButton />
             <DrawerBody>
               <Heading as={Link} to="" fontFamily="inherit">
