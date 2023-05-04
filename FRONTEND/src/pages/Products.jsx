@@ -76,6 +76,9 @@ export default function Products() {
                 p={{ base: "10px", md: "20px" }}
                 border="1px solid rgb(196, 196, 196)"
                 target={"_blank"}
+                borderRadius="20px"
+                m="5px"
+                _hover={{ bgColor:"gray.700", color:"white"}}
               >
                 <Skeleton isLoaded={!loading}>
                   <Image

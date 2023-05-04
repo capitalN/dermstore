@@ -27,12 +27,19 @@ export default function User() {
 
   function handleLogut() {
     localStorage.removeItem("token");
-    window.location.reload()
+    window.location.reload();
   }
 
   return (
     <Center h="100vh">
-      <Stack border={"1px solid"} p="20px" w="350px">
+      <Stack
+        border={"1px solid"}
+        p="40px"
+        w="350px"
+        bgColor="gray.700"
+        color="white"
+        borderRadius={"20px"}
+      >
         <Image
           src={avatar}
           alt={username}

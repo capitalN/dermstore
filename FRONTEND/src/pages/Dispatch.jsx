@@ -69,7 +69,10 @@ export default function Dispatch() {
         gap="40px"
         textAlign={"left"}
         border="2px solid"
-        p="20px"
+        p="30px"
+        bgColor={"gray.700"}
+        color="white"
+        borderRadius={"20px"}
       >
         <Stack w="330px">
           <Text fontWeight={"bold"}>1. ADDRESS</Text>
@@ -83,7 +86,7 @@ export default function Dispatch() {
               type="number"
             />
             <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handlePin}>
+              <Button h="1.75rem" size="sm" onClick={handlePin} {...ButtonStyle}>
                 CHECK
               </Button>
             </InputRightElement>
